@@ -17,6 +17,8 @@ import java.util.List;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private RestTemplate restTemplate;
     private Logger LOGGER = LoggerFactory.getLogger(CompanyController.class);
 
     @PostMapping("/saveAllCompanies")
@@ -48,12 +50,14 @@ public class CompanyController {
     {
         List<Job>jobList = null;
         List<List<Long>>  jobIds = companyService.getJobIdsByCompany(companyId);
-        RestTemplate restTemplate = new RestTemplate();
+        //RestTemplate restTemplate = new RestTemplate(); //Using LoadBalanced RestTemplate
         if(!jobIds.isEmpty())
         {
             //calling job microservice post request using RestTemplate
-            jobList = restTemplate.postForObject("http://localhost:8080/getJobsByIds",jobIds.get(0),
-                    List.class);
+//            jobList = restTemplate.postForObject("http://localhost:8080/getJobsByIds",jobIds.get(0),
+//                    List.class);
+            jobList = restTemplate.postForObject("http://jobms:8080/getJobsByIds",jobIds.get(0),
+                    List.class); //HTTP call with service name in the URL
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(jobList);
         }
        return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);//Another way of creating ResponseEntity
