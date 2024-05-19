@@ -52,7 +52,11 @@ public class CompanyController {
     public Company getCompanyById(@PathVariable Long companyId)
     {
         Optional<Company> optional = companyService.getCompanyById(companyId);
-        LOGGER.error(String.valueOf(optional.get()));
+        if(optional == null)
+        {
+            LOGGER.error("getCompanyById company details doesn't exists for Conpany id "+companyId);
+            return null;
+        }
         return optional.isPresent()? optional.get(): null;
     }
     @ExceptionHandler(Exception.class)
@@ -95,8 +99,7 @@ public class CompanyController {
         Company company = getCompanyById(companyId);
         CompanyJobDetails companyJobDetails= null;
         ResponseEntity<List<Job>> responseEntity = getJobsByCompanyIdUsingFeignClient(companyId);
-        responseEntity.getBody();
-        if(company != null)
+        if(responseEntity.getStatusCode()==HttpStatus.ACCEPTED && company != null)
         {
             companyJobDetails = new CompanyJobDetails();
             companyJobDetails.setCompanyId(company.getCompanyId());
