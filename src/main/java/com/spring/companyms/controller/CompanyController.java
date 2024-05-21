@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("company")
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
@@ -75,7 +76,7 @@ public class CompanyController {
             //calling job microservice post request using RestTemplate
 //            jobList = restTemplate.postForObject("http://localhost:8080/getJobsByIds",jobIds.get(0),
 //                    List.class);
-            jobList = restTemplate.postForObject("jobms/getJobsByIds",jobIds.get(0),
+            jobList = restTemplate.postForObject("jobms-prod/getJobsByIds",jobIds.get(0),
                     List.class); //HTTP call with service name in the URL
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(jobList);
         }

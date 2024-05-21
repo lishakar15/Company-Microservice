@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "03715ef8-a683-4328-b7ae-0f1b87bf7adf",
+		"name": "companyms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25129460"
+	},
+	"item": [
+		{
+			"name": "saveAllCompanies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n    \"companyId\":201,\r\n    \"companyName\":\"ZOHO\",\r\n    \"jobIds\":[100,101]\r\n},\r\n{\r\n\r\n    \"companyId\":202,\r\n    \"companyName\":\"Cognizant\",\r\n    \"jobIds\":[103,104]\r\n}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/saveAllCompanies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"saveAllCompanies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Heath Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/company/healthCheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"company",
+						"healthCheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCompanies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/getAllCompanies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"getAllCompanies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getJobsByCompanyId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/company/getJobsByCompanyId/201",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"company",
+						"getJobsByCompanyId",
+						"201"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCompanyById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/company/getCompanyById/201",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"company",
+						"getCompanyById",
+						"201"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCompanyJobDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/company/getCompanyJobDetails/203",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"company",
+						"getCompanyJobDetails",
+						"203"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
