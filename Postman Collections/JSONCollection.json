@@ -28,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "Heath Check",
+			"name": "HeathCheck",
 			"id": "5cee30a1-0914-4a8b-a15a-a3eb501e77bc",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -62,7 +62,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8081/company/getJobsByCompanyId/201"
+				"url": "http://localhost:8081/company/getJobsByCompanyId/202"
 			},
 			"response": []
 		},
