@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "03715ef8-a683-4328-b7ae-0f1b87bf7adf",
+		"name": "companyms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "saveAllCompanies",
+			"id": "82fe6bef-019b-4206-a2e9-28ca085ce75c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n    \"companyId\":201,\r\n    \"companyName\":\"ZOHO\",\r\n    \"jobIds\":[100,101]\r\n},\r\n{\r\n\r\n    \"companyId\":202,\r\n    \"companyName\":\"Cognizant\",\r\n    \"jobIds\":[103,104]\r\n},\r\n{\r\n\r\n    \"companyId\":203,\r\n    \"companyName\":\"Verizon\",\r\n    \"jobIds\":[103,104]\r\n}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/company/saveAllCompanies"
+			},
+			"response": []
+		},
+		{
+			"name": "HeathCheck",
+			"id": "5cee30a1-0914-4a8b-a15a-a3eb501e77bc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/healthCheck"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCompanies",
+			"id": "a464e6c1-8869-41eb-9cf8-e634b88c64f4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/getAllCompanies"
+			},
+			"response": []
+		},
+		{
+			"name": "getJobsByCompanyId",
+			"id": "e43a8335-80ff-4edb-a23f-af7af62ad4f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/getJobsByCompanyId/202"
+			},
+			"response": []
+		},
+		{
+			"name": "getCompanyById",
+			"id": "617df1bd-ece9-44a3-bddb-85f62087452d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/getCompanyById/201"
+			},
+			"response": []
+		},
+		{
+			"name": "getCompanyJobDetails",
+			"id": "17958bc3-b769-479d-90d9-14b91185a6d4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/getCompanyJobDetails/201"
+			},
+			"response": []
+		}
+	]
+}
