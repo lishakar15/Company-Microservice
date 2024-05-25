@@ -8,6 +8,6 @@ import java.util.List;
 
 @FeignClient("jobms")
 public interface JobClient {
-    @PostMapping("/getJobsByIds")
+    @PostMapping("/job/getJobsByIds")
     public List<Job> getJobsByIds(List<Long> jobIds);
 }
