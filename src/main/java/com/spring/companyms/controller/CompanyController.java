@@ -6,6 +6,8 @@ import com.spring.companyms.entity.Company;
 import com.spring.companyms.external.Job;
 import com.spring.companyms.service.CompanyService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.ws.rs.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ public class CompanyController {
     @Autowired
     private JobClient jobClient;
     private Logger LOGGER = LoggerFactory.getLogger(CompanyController.class);
+    private Integer attempt =0;
 
     @PostMapping("/saveAllCompanies")
     @ResponseBody
@@ -117,6 +120,7 @@ public class CompanyController {
         return new ResponseEntity<>(companyJobDetails,HttpStatus.ACCEPTED);
 
     }
+    //CircuitBreaker
     @GetMapping("/getAllJobs")
     @CircuitBreaker(name="companyBreaker",fallbackMethod = "fallbackMethod")
     public List<Job> getAllJobs()
@@ -129,5 +133,24 @@ public class CompanyController {
         Job job = new Job(0L,"NA", 0L);//0L default Long value for jobId and companyId
         return new ArrayList<Job>(Arrays.asList(job)); //Returning dummy data to avoid other service failures.
     }
+    //Retry Technique
+    @GetMapping("/getAllJobsRetry")
+    @Retry(name="companyBreaker",fallbackMethod = "fallbackMethod")
+    public List<Job> getAllJobsForRetry()
+    {
+        System.out.println("Retry Attempt = "+ ++attempt);
+        return jobClient.getAllJobs();
+    }
+
+    //Rate Limiter Technique
+    @GetMapping("/getAllJobsRetry")
+    @RateLimiter(name = "companyBreaker",fallbackMethod = "fallbackMethod")
+    public List<Job> getAllJobsForRateLimiter()
+    {
+        return jobClient.getAllJobs();
+    }
+
+
+
 
 }
