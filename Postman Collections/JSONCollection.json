@@ -91,6 +91,19 @@
 				"url": "http://localhost:8081/company/getCompanyJobDetails/201"
 			},
 			"response": []
+		},
+		{
+			"name": "getAllJobs",
+			"id": "34710b93-a373-4568-b23b-10c401b9981e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/company/getAllJobsRetry"
+			},
+			"response": []
 		}
 	]
 }
