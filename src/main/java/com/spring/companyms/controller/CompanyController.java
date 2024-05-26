@@ -5,6 +5,7 @@ import com.spring.companyms.dto.CompanyJobDetails;
 import com.spring.companyms.entity.Company;
 import com.spring.companyms.external.Job;
 import com.spring.companyms.service.CompanyService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.ws.rs.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,13 @@ import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jmx.export.naming.IdentityNamingStrategy;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.management.RuntimeMBeanException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,15 +61,15 @@ public class CompanyController {
         if(optional == null)
         {
             LOGGER.error("getCompanyById company details doesn't exists for Conpany id "+companyId);
-            return null;
+            return new Company();
         }
-        return optional.isPresent()? optional.get(): null;
+        return optional.isPresent()? optional.get(): new Company();
     }
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public void handleException(Exception ex)
     {
         System.out.println("Error occured "+ex);
-    }
+    }*/
     @GetMapping("/getJobsByCompId/{companyId}")
     public ResponseEntity<List<Job>> getJobsByCompanyIdUsingRestTempl(@PathVariable Long companyId)
     {
@@ -93,10 +98,9 @@ public class CompanyController {
         }
         return new ResponseEntity<> (jobList,HttpStatus.ACCEPTED);
     }
-
+    @CircuitBreaker(name="companyBreaker")
     @GetMapping("/getCompanyJobDetails/{companyId}")
-    public ResponseEntity<CompanyJobDetails> getCompanyJobDetails(@PathVariable Long companyId)
-    {
+    public ResponseEntity<CompanyJobDetails> getCompanyJobDetails(@PathVariable Long companyId) {
         Company company = getCompanyById(companyId);
         CompanyJobDetails companyJobDetails= null;
         ResponseEntity<List<Job>> responseEntity = getJobsByCompanyIdUsingFeignClient(companyId);
@@ -112,6 +116,18 @@ public class CompanyController {
         }
         return new ResponseEntity<>(companyJobDetails,HttpStatus.ACCEPTED);
 
+    }
+    @GetMapping("/getAllJobs")
+    @CircuitBreaker(name="companyBreaker",fallbackMethod = "fallbackMethod")
+    public List<Job> getAllJobs()
+    {
+        return jobClient.getAllJobs();
+    }
+    //Fallback method with same return type of original method
+    public List<Job> fallbackMethod(Exception ex){
+        System.out.println("Fallback Method Executed. Job Microservice is down...");
+        Job job = new Job(0L,"NA", 0L);//0L default Long value for jobId and companyId
+        return new ArrayList<Job>(Arrays.asList(job)); //Returning dummy data to avoid other service failures.
     }
 
 }

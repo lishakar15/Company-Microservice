@@ -2,6 +2,7 @@ package com.spring.companyms.clients;
 
 import com.spring.companyms.external.Job;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -10,4 +11,7 @@ import java.util.List;
 public interface JobClient {
     @PostMapping("/job/getJobsByIds")
     public List<Job> getJobsByIds(List<Long> jobIds);
+
+    @GetMapping("/job/getAllJobs")
+    public List<Job> getAllJobs();
 }
