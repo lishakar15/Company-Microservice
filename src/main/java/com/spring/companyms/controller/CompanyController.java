@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/company")
@@ -130,7 +131,7 @@ public class CompanyController {
     //Fallback method with same return type of original method
     public List<Job> fallbackMethod(Exception ex){
         System.out.println("Fallback Method Executed. Job Microservice is down...");
-        Job job = new Job(0L,"NA", 0L);//0L default Long value for jobId and companyId
+        Job job = new Job(null,"NA", 0L);//0L default Long value for jobId and companyId
         return new ArrayList<Job>(Arrays.asList(job)); //Returning dummy data to avoid other service failures.
     }
     //Retry Technique
@@ -143,14 +144,55 @@ public class CompanyController {
     }
 
     //Rate Limiter Technique
-    @GetMapping("/getAllJobsRetry")
+    @GetMapping("/getAllJobsRateLimiter")
     @RateLimiter(name = "companyBreaker",fallbackMethod = "fallbackMethod")
     public List<Job> getAllJobsForRateLimiter()
     {
         return jobClient.getAllJobs();
     }
 
+    @PostMapping("saveCompany")
+    public Company saveCompany(@RequestBody Company company)
+    {
+        return companyService.saveCompany(company);
+    }
 
-
+    /**
+     * This method is to update company if there is any jobs are created
+     * @param jobList
+     * @return
+     */
+    @PostMapping("/updateJobsInCompany")
+    public ResponseEntity<String> updateJobsInCompany(@RequestBody List<Job> jobList)
+    {
+        if(jobList != null && !jobList.isEmpty())
+        {
+            try
+            {
+                for(Job job:jobList)
+                {
+                    Optional<Company> optional = companyService.getCompanyById(job.getCompanyId());
+                    if(optional.isPresent())
+                    {
+                        Company company = optional.get();
+                        List<Long> jobIds = company.getJobIds();
+                        if( jobIds== null || jobIds.isEmpty())
+                        {
+                            jobIds = new ArrayList<>();
+                        }
+                        jobIds.add(job.getJobId());
+                        company.setJobIds(jobIds);
+                        companyService.saveCompany(company);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                LOGGER.error("Exception occurred in updateJobsInCompany() "+ex.getMessage());
+                return new ResponseEntity<>("Error occurred in updateJobsInCompany()",HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return new ResponseEntity<>("Company Details updated with job ids",HttpStatus.OK);
+    }
 
 }

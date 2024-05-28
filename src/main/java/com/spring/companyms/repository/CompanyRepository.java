@@ -12,4 +12,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long>{
 
     @Query("select jobIds from Company c where c.companyId =?1")
     public List<List<Long>> getJobIdsByCompany(Long companyId);
+
+    public List<Company> getCompanyByCompanyIdIn(List<Long> companyIds);
 }

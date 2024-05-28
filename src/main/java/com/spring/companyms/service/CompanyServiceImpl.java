@@ -33,4 +33,14 @@ public class CompanyServiceImpl implements CompanyService {
     public Optional<Company> getCompanyById(Long companyId) {
         return companyRepository.findById(companyId);
     }
+
+    @Override
+    public List<Company> getCompaniesByCompanyId(List<Long> companyIds) {
+        return companyRepository.getCompanyByCompanyIdIn(companyIds);
+    }
+
+    @Override
+    public Company saveCompany(Company company) {
+        return companyRepository.save(company);
+    }
 }
