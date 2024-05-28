@@ -104,28 +104,6 @@
 				"url": "http://localhost:8081/company/getAllJobsRetry"
 			},
 			"response": []
-		},
-		{
-			"name": "New Request",
-			"id": "49e7cb26-80f2-48b9-a829-89b6917148fa",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[{\r\n    \"description\":\"Software Engineer 2\",\r\n    \"companyId\":201,\r\n    \"jobIds\":\r\n    [\r\n        560,561\r\n    ]\r\n},\r\n{\r\n    \"description\":\"Automation Tester\",\r\n    \"companyId\":201\r\n}\r\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8081/company/updateJobsInCompany"
-			},
-			"response": []
 		}
 	]
 }
