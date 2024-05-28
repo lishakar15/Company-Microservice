@@ -104,6 +104,18 @@
 				"url": "http://localhost:8081/company/getAllJobsRetry"
 			},
 			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "49e7cb26-80f2-48b9-a829-89b6917148fa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
