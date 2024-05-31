@@ -75,7 +75,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8081/company/getCompanyById/201"
+				"url": "http://localhost:8081/company/getCompanyById/2012"
 			},
 			"response": []
 		},
@@ -101,7 +101,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8081/company/getAllJobsRetry"
+				"url": "http://localhost:8081/company/getAllJobs"
 			},
 			"response": []
 		}
